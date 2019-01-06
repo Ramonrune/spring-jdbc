@@ -1,5 +1,8 @@
 package com.pluralsight.repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,10 +10,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.pluralsight.model.Ride;
+import com.pluralsight.repository.util.RideRowMapper;
 
 @Repository("rideRepository")
 public class RideRepositoryImpl implements RideRepository {
@@ -20,19 +27,15 @@ public class RideRepositoryImpl implements RideRepository {
 	
 	@Override
 	public List<Ride> getRides() {
-		Ride ride = new Ride();
-		ride.setName("Corner Canyon");
-		ride.setDuration(120);
-		List <Ride> rides = new ArrayList<>();
-		rides.add(ride);
+	
+		List<Ride> rides = jdbcTemplate.query("select * from ride", new RideRowMapper());
+		
 		return rides;
 	}
 
 	@Override
 	public Ride createRide(Ride ride) {
-		jdbcTemplate.update("insert into ride(name, duration) values (?, ?)", ride.getName(), ride.getDuration());
-		
-		/*SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
+		SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
 		
 		
 		List<String> columns = new ArrayList<>();
@@ -49,12 +52,19 @@ public class RideRepositoryImpl implements RideRepository {
 		
 		insert.setGeneratedKeyName("id");
 		
-		Number key = insert.executeAndReturnKey(data);
+		Number id = insert.executeAndReturnKey(data);
 		
-		System.out.println(key);
 		
-		*/
-		return null;
+		return getRide(id.intValue());
+	}
+	
+	public Ride getRide(int id) {
+		
+		System.out.println("aquiiiii");
+		Ride ride = jdbcTemplate.queryForObject("select * from ride where id = ?", new RideRowMapper(), id);
+					
+		System.out.println("O RIDE VALE " + ride.getId());
+		return ride;
 	}
 	
 }
