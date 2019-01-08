@@ -1,8 +1,5 @@
 package com.pluralsight.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.pluralsight.model.Ride;
@@ -58,6 +52,7 @@ public class RideRepositoryImpl implements RideRepository {
 		return getRide(id.intValue());
 	}
 	
+	@Override
 	public Ride getRide(int id) {
 		
 		System.out.println("aquiiiii");
@@ -65,6 +60,16 @@ public class RideRepositoryImpl implements RideRepository {
 					
 		System.out.println("O RIDE VALE " + ride.getId());
 		return ride;
+	}
+	
+	@Override
+	public Ride updateRide(Ride ride) {
+		jdbcTemplate.update("update ride set name = ?, duration = ? where id = ?", ride.getName(), ride.getDuration(), ride.getId());
+		return ride;
+	}
+	
+	public void updateRides(java.util.List<Object[]> pairs) {
+		jdbcTemplate.batchUpdate("update ride set ride_date = ? where id = ?", pairs);
 	}
 	
 }
