@@ -24,6 +24,11 @@ public class RideController {
 		return rideService.createRide(ride);
 	}
 	
+	@RequestMapping(value = "/ride/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody Object deleteRide(@PathVariable(value=("id")) int id) {
+		return rideService.deleteRide(id);
+	}
+	
 	@RequestMapping(value = "/ride", method = RequestMethod.PUT)
 	public @ResponseBody Ride updateRide(@RequestBody Ride ride) {
 		return rideService.updateRide(ride);

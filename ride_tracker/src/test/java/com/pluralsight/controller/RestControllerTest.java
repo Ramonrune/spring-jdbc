@@ -50,15 +50,17 @@ public class RestControllerTest {
 		
 	}*/
 	
-	@Test
+	/*@Test
 	public void testBatchUpdate() {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		restTemplate.getForObject("http://localhost:8080/ride_tracker/batch", Object.class);
 		
-	}
+	}*/
+	
 	
 	/*
+	
 	@Test()
 	public void testCreateRide() {
 		RestTemplate restTemplate = new RestTemplate();
@@ -72,8 +74,14 @@ public class RestControllerTest {
 		
 		System.out.println("Created:" + rideResult.getName() + " -- " + rideResult.getId());
 	
-	}*/
-	
-
+	}
+	*/
+	@Test
+	public void testDelete() {
+		RestTemplate restTemplate = new RestTemplate();
+		
+		restTemplate.delete("http://localhost:8080/ride_tracker/ride/20", Object.class);
+		
+	}
 	
 }

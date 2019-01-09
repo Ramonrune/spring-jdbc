@@ -16,4 +16,6 @@ public interface RideService {
 
 	void batch();
 
+	Object deleteRide(int id);
+
 }
