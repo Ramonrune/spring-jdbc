@@ -12,7 +12,7 @@ import com.pluralsight.model.Ride;
 import org.junit.Test;
 
 public class RestControllerTest {
-	/*
+	
 	@Test()
 	public void testGetRides() {
 		RestTemplate restTemplate = new RestTemplate();
@@ -26,8 +26,8 @@ public class RestControllerTest {
 		for (Ride ride : rides) {
 			System.out.println("Ride name: " + ride.getName());
 		}
-	}*/
-	 /*
+	}
+	 
 	@Test
 	public void testGetRide() {
 		RestTemplate restTemplate = new RestTemplate();
@@ -35,9 +35,9 @@ public class RestControllerTest {
 		Ride ride = restTemplate.getForObject("http://localhost:8080/ride_tracker/ride/19", Ride.class);
 		
 		System.out.println(ride.getName());
-	}*/
+	}
 	
-	/*@Test
+	@Test
 	public void testUpdateRide() {
 		RestTemplate restTemplate = new RestTemplate();
 	
@@ -48,18 +48,18 @@ public class RestControllerTest {
 		
 		System.out.println("Duration: " + ride.getDuration());
 		
-	}*/
+	}
 	
-	/*@Test
+	@Test
 	public void testBatchUpdate() {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		restTemplate.getForObject("http://localhost:8080/ride_tracker/batch", Object.class);
 		
-	}*/
+	}
 	
 	
-	/*
+	
 	
 	@Test()
 	public void testCreateRide() {
@@ -75,12 +75,20 @@ public class RestControllerTest {
 		System.out.println("Created:" + rideResult.getName() + " -- " + rideResult.getId());
 	
 	}
-	*/
+	
 	@Test
 	public void testDelete() {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		restTemplate.delete("http://localhost:8080/ride_tracker/ride/20", Object.class);
+		
+	}
+	
+	@Test
+	public void testException() {
+		RestTemplate restTemplate = new RestTemplate();
+		
+		restTemplate.getForObject("http://localhost:8080/ride_tracker/test", Object.class);
 		
 	}
 	
